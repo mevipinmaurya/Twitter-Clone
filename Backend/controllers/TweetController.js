@@ -1,4 +1,5 @@
 import Tweet from "../models/TweetModel.js";
+import User from "../models/UserModel.js";
 
 
 // Create Tweet function
@@ -80,9 +81,19 @@ const likeDislike = async (req, res) => {
 
 
 // Get all tweets
-const getAllTweets = async (req, res)=>{
+const getAllTweets = async (req, res) => {
+    // Loggedin user tweets + Following user tweets
     try {
-        
+        const id = req.params.id;
+        const loggedInUser = await User.findById(id);
+        const loggedInUserTweets = await Tweet.find({ userId: id })
+        const followingUserTweets = await Promise.all(loggedInUser.following.map(async (otherUsersId) => {
+            return await Tweet.find({ userId: otherUsersId })
+        }))
+
+        return res.status(200).json({
+            tweets: loggedInUserTweets.concat(...followingUserTweets)
+        })
     } catch (error) {
         console.log(error)
         return res.status(401).json({
@@ -92,4 +103,25 @@ const getAllTweets = async (req, res)=>{
     }
 }
 
-export { createTweet, deleteTweet, likeDislike, getAllTweets }
+
+// Get following tweets
+const getFollowingTweets = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const loggedInUser = await User.findById(id);
+        const followingUserTweets = await Promise.all(loggedInUser.following.map(async (otherUsersId) => {
+            return await Tweet.find({ userId: otherUsersId })
+        }))
+        return res.status(200).json({
+            tweets: [].concat(...followingUserTweets)
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(401).json({
+            success: false,
+            message: "Error"
+        })
+    }
+}
+
+export { createTweet, deleteTweet, likeDislike, getAllTweets, getFollowingTweets }

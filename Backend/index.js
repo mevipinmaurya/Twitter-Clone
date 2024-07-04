@@ -4,6 +4,7 @@ import databaseConnection from './config/database.js'
 import userRouter from './routes/UserRoute.js'
 import cookieParser from 'cookie-parser'
 import tweetRouter from './routes/TweetRoute.js'
+import cors from "cors"
 
 const app = express()
 
@@ -21,7 +22,12 @@ app.use(express.urlencoded({
 }))
 app.use(express.json())
 app.use(cookieParser())
-
+app.use(cors())
+// const corsOption = {
+//     origin : "http://localhost:3000",
+//     credentials : true,
+// }
+// app.use(cors(corsOption))
 
 // API Endpoints
 app.use("/api/v1/user", userRouter)
