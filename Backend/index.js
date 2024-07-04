@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import databaseConnection from './config/database.js'
 import userRouter from './routes/UserRoute.js'
 import cookieParser from 'cookie-parser'
+import tweetRouter from './routes/TweetRoute.js'
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use(cookieParser())
 
 // API Endpoints
 app.use("/api/v1/user", userRouter)
+app.use("/api/v1/tweet", tweetRouter)
 
 
 app.get("/", (req, res) => {

@@ -5,8 +5,7 @@ const tweetSchema = new Schema(
     {
         description: { type: String, required: true },
         likes: { type: Array, default: [] },
-        userId: { type: mongoose.Schema.Types.ObjectId },
-        bookmarks: { type: Array, default: [] }
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
     },
     {
         timestamps: true
