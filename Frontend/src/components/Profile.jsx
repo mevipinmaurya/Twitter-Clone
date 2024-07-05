@@ -1,11 +1,21 @@
 import React from 'react'
 import cover from "../assets/cover.png"
 import { IoArrowBackOutline } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Avatar from 'react-avatar'
 import vipin from "../assets/vipin.png"
+import useGetProfile from "../hooks/useGetProfile"
+import { useSelector } from "react-redux"
 
 const Profile = () => {
+
+    const { profile } = useSelector(store => store.user)
+
+    const userId = useParams()
+
+    // Custom Hooks
+    useGetProfile(userId.id);
+
     return (
         <div className='w-[54%]'>
             <div className='w-full'>
@@ -14,7 +24,7 @@ const Profile = () => {
                         <IoArrowBackOutline size="24px" />
                     </Link>
                     <div className='ml-1'>
-                        <h1 className='font-bold text-lg'>Vipin</h1>
+                        <h1 className='font-bold text-lg'>{profile?.name}</h1>
                         <p className='text-gray-500 text-sm'>10 Posts</p>
                     </div>
                 </div>
@@ -30,8 +40,8 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className='m-4'>
-                    <h1 className='text-xl font-bold'>Vipin</h1>
-                    <p>@mevipinmaurya</p>
+                    <h1 className='text-xl font-bold'>{profile?.name}</h1>
+                    <p>@{profile?.username}</p>
                     <div className='text-gray-800 mt-5'>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque molestias placeat aliquam error eum libero. Nesciunt officia pariatur ut! Assumenda.</p>
                     </div>

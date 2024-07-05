@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import twitter from "../assets/twitter.png"
 import axios from 'axios'
 import { USER_API_ENDPOINT } from '../utils/Constant';
+import toast from 'react-hot-toast';
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from 'react-redux'
+import { getUser } from '../redux/UserSlice';
 
 const Login = () => {
 
@@ -12,6 +16,9 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const submitHandler = async (e) => {
     e.preventDefault();
     // console.log(name, username, email, password);
@@ -20,10 +27,27 @@ const Login = () => {
       try {
         const res = await axios.post(`${USER_API_ENDPOINT}/login`, {
           email, password
+        }, {
+          headers: {
+            'Content-Type': "application/json"
+          },
+          withCredentials: true
         })
-        console.log(res)
+        // console.log(res)
+        dispatch(getUser(res?.data?.user))
+        
+        if (res.data.success) {
+          setName("");
+          setEmail("");
+          setUsername("");
+          setPassword("")
+
+          navigate("/")
+          toast.success(res.data.message)
+        }
       } catch (error) {
         console.log(error)
+        toast.error("Email or password is incorrect !!!")
       }
     }
     else {
@@ -31,10 +55,25 @@ const Login = () => {
       try {
         const res = await axios.post(`${USER_API_ENDPOINT}/register`, {
           name, username, email, password
+        }, {
+          headers: {
+            'Content-Type': "application/json"
+          },
+          withCredentials: true
         })
-        console.log(res)
+        // console.log(res)
+        if (res.data.success) {
+          toast.success(res.data.message)
+          setName("");
+          setEmail("");
+          setUsername("");
+          setPassword("")
+          setIsLogin(true)
+          // console.log(res.data.message)
+        }
       } catch (error) {
         console.log(error)
+        toast.error("Email or password is incorrect !!!")
       }
     }
   }

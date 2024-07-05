@@ -2,9 +2,10 @@ import React from 'react'
 import { CiSearch } from "react-icons/ci";
 import Avatar from 'react-avatar'
 import vipin from "../assets/vipin.png"
+import { Link } from 'react-router-dom';
 
 
-const RightSidebar = () => {
+const RightSidebar = ({ otherUsers }) => {
   return (
     <div className='w-[26%] ml-2'>
       <div className="w-full">
@@ -17,20 +18,28 @@ const RightSidebar = () => {
           <div className='flex flex-col'>
             <h1 className='text-xl font-bold'>Who To Follow</h1>
 
-            <div className='flex items-center'>
-              <div className='flex items-center gap-2'>
-                <Avatar src={vipin} size="35" round={true} />
-                <div className='flex flex-col'>
-                  <h1 className='font-semibold text-[15px]'>Vipin</h1>
-                  <p className='text-[13px] text-gray-500 '>@mevipinmaurya</p>
-                </div>
-              </div>
-              <div className='w-full flex justify-end mt-5 mb-5'>
-                <button className='px-2 py-2 text-center text-[13px] outline-none border-none rounded-full bg-black text-white w-20'>Profile</button>
-              </div>
-            </div>
+            {
+              otherUsers?.map((user) => {
+                return (
+                  <div key={user._id} className='flex items-center'>
+                    <div className='flex items-center gap-2'>
+                      <Avatar src={vipin} size="35" round={true} />
+                      <div className='flex flex-col'>
+                        <h1 className='font-semibold text-[15px]'>{user.name}</h1>
+                        <p className='text-[13px] text-gray-500 '>@{user.username}</p>
+                      </div>
+                    </div>
+                    <div className='w-full flex justify-end mt-5 mb-5'>
+                      <Link to={`/profile/${user?._id}`}>
+                        <button className='px-2 py-2 text-center text-[13px] outline-none border-none rounded-full bg-black text-white w-20'>Profile</button>
+                      </Link>
+                    </div>
+                  </div>
+                )
+              })
+            }
 
-            <div className='flex items-center'>
+            {/* <div className='flex items-center'>
               <div className='flex items-center gap-2'>
                 <Avatar src={vipin} size="35" round={true} />
                 <div className='flex flex-col'>
@@ -41,20 +50,8 @@ const RightSidebar = () => {
               <div className='w-full flex justify-end mt-5 mb-5'>
                 <button className='px-2 py-2 text-center text-[13px] outline-none border-none rounded-full bg-black text-white w-20'>Profile</button>
               </div>
-            </div>
+            </div> */}
 
-            <div className='flex items-center'>
-              <div className='flex items-center gap-2'>
-                <Avatar src={vipin} size="35" round={true} />
-                <div className='flex flex-col'>
-                  <h1 className='font-semibold text-[15px]'>Vipin</h1>
-                  <p className='text-[13px] text-gray-500 '>@mevipinmaurya</p>
-                </div>
-              </div>
-              <div className='w-full flex justify-end mt-5 mb-5'>
-                <button className='px-2 py-2 text-center text-[13px] outline-none border-none rounded-full bg-black text-white w-20'>Profile</button>
-              </div>
-            </div>
 
           </div>
         </div>
