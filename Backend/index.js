@@ -32,6 +32,7 @@ app.use(cors(corsOption))
 // API Endpoints
 app.use("/api/v1/user", userRouter)
 app.use("/api/v1/tweet", tweetRouter)
+app.use("/images", express.static('uploads'))
 
 
 app.get("/", (req, res) => {

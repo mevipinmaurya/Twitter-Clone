@@ -1,9 +1,14 @@
 import Tweet from "../models/TweetModel.js";
 import User from "../models/UserModel.js";
+import fs from 'fs'         // fs is 'file system' which is pre-build to the node js
 
 
 // Create Tweet function
 const createTweet = async (req, res) => {
+
+    let image_filename = `${req.file.filename}`
+    // console.log(req)
+
     try {
         const { description, id } = req.body;
         if (!description || !id) {
@@ -16,13 +21,14 @@ const createTweet = async (req, res) => {
         const tweet = new Tweet({
             description: description,
             userId: id,
-            userDetails: user
+            userDetails: user,
+            image : image_filename
         })
         await tweet.save()
 
         return res.status(200).json({
             success: true,
-            message: "Tweet created successfully"
+            message: "Tweet created successfully",
         })
     } catch (error) {
         console.log(error)

@@ -16,6 +16,8 @@ import { timeSince } from '../utils/Constant';
 const Tweet = ({ tweet }) => {
     // console.log(tweet)
 
+    const URL = "http://localhost:3000/images"
+
     const { user } = useSelector(store => store.user);
     const userId = user?._id
 
@@ -64,6 +66,13 @@ const Tweet = ({ tweet }) => {
                     </div>
 
                 </div>
+                    {
+                        tweet?.image
+                            ? (<div className='w-full p-3'>
+                                <img className='rounded-lg w-full h-[300px]' src={`${URL}/${tweet?.image}`} alt="" />
+                            </div>)
+                            : <></>
+                    }
 
                 <div className='w-full p-4'>
                     <div className='flex justify-between w-full mt-4'>

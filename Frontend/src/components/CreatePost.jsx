@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import Avatar from 'react-avatar'
 import vipin from "../assets/vipin.png"
+import { FaImage } from "react-icons/fa6";
 import axios from "axios"
 import toast from "react-hot-toast"
 import { useDispatch, useSelector } from 'react-redux'
 import { TWEET_API_ENDPOINT } from "../utils/Constant"
 import { getAllTweets, getIsActive, getRefresh } from '../redux/TweetSlice'
+import cover from "../assets/cover.png"
 
 const CreatePost = () => {
+
+    const [image, setImage] = useState(false);
 
     const [description, setDescription] = useState("")
 
@@ -19,14 +23,20 @@ const CreatePost = () => {
 
     const dispatch = useDispatch()
 
-    const submitHandler = async () => {
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("id", id)
+        formData.append("description", description)
+        formData.append("image", image)
         try {
-            const res = await axios.post(`${TWEET_API_ENDPOINT}/create`, { description, id }, { withCredentials: true })
+            const res = await axios.post(`${TWEET_API_ENDPOINT}/create`, formData, { withCredentials: true })
 
             if (res.data.success) {
                 toast.success(res.data.message)
                 dispatch(getRefresh())
                 setDescription("")
+                setImage(false)
             }
         } catch (error) {
             console.log(error)
@@ -40,6 +50,11 @@ const CreatePost = () => {
     const followingHandler = () => {
         dispatch(getIsActive(false))
     }
+
+
+    // const URL = "http://localhost:3000/images";
+    // console.log(image.name);
+    // console.log(`${URL}/${image.name}`)
 
 
     return (
@@ -57,17 +72,26 @@ const CreatePost = () => {
 
 
             <div className='mt-5 mb-4'>
-                <div className='border border-b-gray-200 border-l-0 border-r-0 border-t-0'>
+                <form onSubmit={submitHandler} className='border border-b-gray-200 border-l-0 border-r-0 border-t-0'>
                     <div className='flex items-center px-10'>
                         <div>
                             <Avatar src={vipin} size="45" round={true} />
                         </div>
-                        <input value={description} onChange={(e) => setDescription(e.target.value)} className='outline-none border-none ml-3 text-xl w-full' type="text" placeholder='What is happening?' />
+                        <input value={description} onChange={(e) => setDescription(e.target.value)} className='outline-none border-none ml-3 text-xl w-full' type="text" placeholder='What is happening?!' />
                     </div>
-                    <div className='w-full flex justify-end mt-5 mb-5 px-10'>
-                        <button onClick={submitHandler} className='px-3 py-2 text-center text-lg outline-none border-none rounded-full bg-[#1D9BF0] text-white w-20'>Post</button>
+                    <div className='px-10 mt-4'>
+                        <img src={cover} alt="file_post" className={`w-[80px] cursor-pointer h-[60px] ${image ? "" : "hidden"}`} />
                     </div>
-                </div>
+                    <div className='w-full flex justify-between mt-1 mb-5 px-10 items-center'>
+                        <div>
+                            <label htmlFor="file-input">
+                                <p className='text-xl font-bold cursor-pointer hover:scale-110 text-[#1D9BF0]'><FaImage /></p>
+                            </label>
+                            <input onChange={(e) => setImage(e.target.files[0])} type="file" id='file-input' hidden />
+                        </div>
+                        <button type='submit' className='px-3 py-2 text-center text-lg outline-none border-none rounded-full bg-[#1D9BF0] text-white w-20'>Post</button>
+                    </div>
+                </form>
             </div>
 
 
