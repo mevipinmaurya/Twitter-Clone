@@ -5,13 +5,15 @@ import axios from "axios"
 import toast from "react-hot-toast"
 import { useDispatch, useSelector } from 'react-redux'
 import { TWEET_API_ENDPOINT } from "../utils/Constant"
-import { getRefresh } from '../redux/TweetSlice'
+import { getAllTweets, getIsActive, getRefresh } from '../redux/TweetSlice'
 
 const CreatePost = () => {
 
     const [description, setDescription] = useState("")
 
     const { user } = useSelector(store => store.user)
+    const { isActive } = useSelector(store => store.tweet)
+
     // console.log(user?._id)
     const id = user?._id
 
@@ -32,14 +34,22 @@ const CreatePost = () => {
         }
     }
 
+    const forYouHandler = () => {
+        dispatch(getIsActive(true))
+    }
+    const followingHandler = () => {
+        dispatch(getIsActive(false))
+    }
+
+
     return (
         <div className='w-full'>
             <div className='w-full'>
                 <div className='flex justify-between items-center border border-b-gray-100 border-t-0 border-l-0 border-r-0'>
-                    <div className='hover:bg-gray-200 rounded-sm w-full py-3 text-center'>
+                    <div onClick={forYouHandler} className={`${isActive ? "border-b-4 border-blue-600" : null} hover:bg-gray-200 rounded-sm w-full py-3 text-center`}>
                         <h1 className='font-semibold text-lg text-gray-700 cursor-pointer'>For You</h1>
                     </div>
-                    <div className='hover:bg-gray-200 rounded-sm w-full py-3 text-center'>
+                    <div onClick={followingHandler} className={`${!isActive ? "border-b-4 border-blue-600" : null} hover:bg-gray-200 rounded-sm w-full py-3 text-center`}>
                         <h1 className='font-semibold text-lg text-gray-700 cursor-pointer'>Following</h1>
                     </div>
                 </div>

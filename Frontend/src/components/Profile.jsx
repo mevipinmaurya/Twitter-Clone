@@ -5,16 +5,59 @@ import { Link, useParams } from 'react-router-dom';
 import Avatar from 'react-avatar'
 import vipin from "../assets/vipin.png"
 import useGetProfile from "../hooks/useGetProfile"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { USER_API_ENDPOINT } from '../utils/Constant';
+import { followingUpdate } from '../redux/UserSlice';
+import { getRefresh } from '../redux/TweetSlice';
 
 const Profile = () => {
 
-    const { profile } = useSelector(store => store.user)
+    const { user, profile } = useSelector(store => store.user)
+
+    // console.log(profile)
+    // console.log(user)
+
+    const dispatch = useDispatch();
 
     const userId = useParams()
-
     // Custom Hooks
     useGetProfile(userId.id);
+
+
+    const followAndUnfollowHandler = async () => {
+        if (user.following.includes(profile?._id)) {
+            // unfollow
+            try {
+                const res = await axios.post(`${USER_API_ENDPOINT}/unfollow/${profile?._id}`, { id: user?._id }, { withCredentials: true })
+
+                dispatch(followingUpdate(profile?._id))
+                dispatch(getRefresh())
+                if (res.data.success) {
+                    toast.success(res.data.message)
+                }
+            } catch (error) {
+                console.log(error)
+                toast.error(error.response.data.message)
+            }
+        }
+        else {
+            // follow
+            try {
+                const res = await axios.post(`${USER_API_ENDPOINT}/follow/${profile?._id}`, { id: user?._id }, { withCredentials: true })
+
+                dispatch(followingUpdate(profile?._id))
+                dispatch(getRefresh())
+                if (res.data.success) {
+                    toast.success(res.data.message)
+                }
+            } catch (error) {
+                console.log(error)
+                toast.error(error.response.data.message)
+            }
+        }
+    }
 
     return (
         <div className='w-[54%]'>
@@ -36,7 +79,11 @@ const Profile = () => {
                     </div>
 
                     <div className='flex justify-end mt-5'>
-                        <button className='px-5 py-2 border-[1px] border-black text-md hover:bg-gray-200 rounded-full text-center' >Edit Profile</button>
+                        {
+                            profile?._id === user?._id
+                                ? (<button className='px-5 py-2 border-[1px] border-black text-md hover:bg-gray-200 rounded-full text-center' >Edit Profile</button>)
+                                : (<button onClick={followAndUnfollowHandler} className='px-5 py-2 border-[1px] text-white bg-black text-md rounded-full text-center' >{user.following.includes(profile?._id) ? "Following" : "Follow"}</button>)
+                        }
                     </div>
                 </div>
                 <div className='m-4'>

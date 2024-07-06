@@ -6,13 +6,35 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { CiUser } from "react-icons/ci";
 import { CiBookmark } from "react-icons/ci";
 import { AiOutlineLogout } from "react-icons/ai";
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { USER_API_ENDPOINT } from '../utils/Constant';
+import { getMyProfile, getOtherUsers, getUser } from '../redux/UserSlice';
+import { getAllTweets } from '../redux/TweetSlice';
 
 
 const LeftSidebar = () => {
 
     const { user } = useSelector(store => store.user)
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+
+    const logoutHandler = async ()=>{
+        try {
+            const res = await axios.get(`${USER_API_ENDPOINT}/logout`)
+            dispatch(getUser(null))
+            dispatch(getOtherUsers(null))
+            dispatch(getMyProfile(null))
+            dispatch(getAllTweets(null))
+            navigate("/login")
+            toast.success(res.data.message)
+        } catch (error) {
+            console.log(error)
+            toast.error("Unable to logout")
+        }
+    }
 
     return (
         <div className='w-[20%]'>
@@ -41,7 +63,7 @@ const LeftSidebar = () => {
                         <span className='text-xl'><CiUser /></span>
                         <p className='font-bold text-md ml-3'>Profile</p>
                     </Link>
-                    <div className='flex my-2 px-4 py-2 items-center hover:bg-gray-200 hover:cursor-pointer rounded-full'>
+                    <div onClick={logoutHandler} className='flex my-2 px-4 py-2 items-center hover:bg-gray-200 hover:cursor-pointer rounded-full'>
                         <span className='text-xl'><AiOutlineLogout /></span>
                         <p className='font-bold text-md ml-3'>logout</p>
                     </div>

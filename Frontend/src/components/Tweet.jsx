@@ -10,6 +10,7 @@ import axios from 'axios';
 import { TWEET_API_ENDPOINT } from '../utils/Constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefresh } from '../redux/TweetSlice';
+import { timeSince } from '../utils/Constant';
 
 
 const Tweet = ({ tweet }) => {
@@ -32,6 +33,18 @@ const Tweet = ({ tweet }) => {
         }
     }
 
+    const deleteTweetHandler = async (id) => {
+        try {
+            const res = await axios.delete(`${TWEET_API_ENDPOINT}/delete/${id}`, { withCredentials: true })
+
+            dispatch(getRefresh())
+            toast.success(res.data.message)
+        } catch (error) {
+            console.log(error);
+            toast.error("Error")
+        }
+    }
+
 
     return (
         <div>
@@ -42,7 +55,7 @@ const Tweet = ({ tweet }) => {
 
                         <div className='flex gap-3 items-center'>
                             <h1 className='font-semibold text-lg'>{tweet?.userDetails[0]?.name}</h1>
-                            <p className='text-sm text-gray-500 '>@{tweet?.userDetails[0]?.username}. 1min</p>
+                            <p className='text-sm text-gray-500 '>@{tweet?.userDetails[0]?.username} &nbsp; &nbsp;{timeSince(tweet?.createdAt)}</p>
                         </div>
 
                         <div>
@@ -72,11 +85,16 @@ const Tweet = ({ tweet }) => {
                             </div>
                             <p className='text-lg'>0</p>
                         </div>
-                        <div className='text-2xl items-center cursor-pointer flex'>
-                            <div className='p-2 hover:bg-red-100 rounded-full'>
-                                <MdDeleteOutline />
-                            </div>
-                        </div>
+
+                        {
+                            user?._id === tweet?.userId && (
+                                <div className='text-2xl items-center cursor-pointer flex'>
+                                    <div onClick={() => deleteTweetHandler(tweet?._id)} className='p-2 hover:bg-red-100 rounded-full'>
+                                        <MdDeleteOutline />
+                                    </div>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
 
