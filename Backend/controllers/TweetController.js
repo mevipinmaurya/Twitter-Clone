@@ -12,9 +12,11 @@ const createTweet = async (req, res) => {
                 message: "All fields are required"
             })
         }
+        const user = await User.findById(id).select("-password")
         const tweet = new Tweet({
             description: description,
-            userId: id
+            userId: id,
+            userDetails : user
         })
         await tweet.save()
 
