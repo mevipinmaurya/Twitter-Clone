@@ -25,3 +25,10 @@ export const timeSince = (timestamp) => {
         }
     }
 }
+
+
+export const createdDate = (createdAt) => {
+    var date = new Date(createdAt)
+    // return (date.getDate() + " " + date.toLocaleString('default', { month: 'long' }))
+    return (date.toLocaleString('en-GB', {day:'numeric', month: 'long', year:'numeric'}))
+}

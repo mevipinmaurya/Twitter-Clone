@@ -5,7 +5,8 @@ const userSlice = createSlice({
     initialState: {
         user: null,
         otherUsers: null,
-        profile: null
+        profile: null,
+        profileRefresh: false,
     },
     reducers: {
         // Multiple actions
@@ -28,10 +29,13 @@ const userSlice = createSlice({
                 // follow
                 state.user.following.push(action.payload)
             }
+        },
+        getProfileRefresh: (state) => {
+            state.profileRefresh = !state.profileRefresh
         }
     }
 })
 
-export const { getUser, getOtherUsers, getMyProfile, followingUpdate } = userSlice.actions;
+export const { getUser, getOtherUsers, getMyProfile, followingUpdate, getProfileRefresh } = userSlice.actions;
 
 export default userSlice.reducer;

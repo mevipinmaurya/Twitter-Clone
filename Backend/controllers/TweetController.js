@@ -16,7 +16,7 @@ const createTweet = async (req, res) => {
         const tweet = new Tweet({
             description: description,
             userId: id,
-            userDetails : user
+            userDetails: user
         })
         await tweet.save()
 
@@ -126,4 +126,22 @@ const getFollowingTweets = async (req, res) => {
     }
 }
 
-export { createTweet, deleteTweet, likeDislike, getAllTweets, getFollowingTweets }
+
+// Get my tweets
+const GetMyTweets = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const loggedInUserTweet = await Tweet.find({userId : id})
+        return res.status(200).json({
+            tweets : loggedInUserTweet
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(401).json({
+            success: false,
+            message: "Error"
+        })
+    }
+}
+
+export { createTweet, deleteTweet, likeDislike, getAllTweets, getFollowingTweets, GetMyTweets }

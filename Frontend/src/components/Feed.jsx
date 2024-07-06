@@ -2,7 +2,6 @@ import React from 'react'
 import CreatePost from './CreatePost'
 import Tweet from './Tweet'
 import { useSelector } from 'react-redux'
-import store from '../redux/Store'
 
 const Feed = () => {
 
