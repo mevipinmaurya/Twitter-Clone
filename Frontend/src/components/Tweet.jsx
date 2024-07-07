@@ -67,7 +67,7 @@ const Tweet = ({ tweet }) => {
 
     return (
         <div>
-            <div className='border-b border-gray-200'>
+            <div className='border-b border-gray-200 dark:border-[#202327]'>
                 <div className='flex items-center w-full gap-4 p-4'>
                     <Avatar src={vipin} size="40" round={true} />
                     <div className='w-full'>
@@ -85,8 +85,8 @@ const Tweet = ({ tweet }) => {
                 </div>
                 {
                     tweet?.image
-                        ? (<div className='w-full p-3'>
-                            <img className='rounded-lg w-full h-[300px]' src={`${URL}/${tweet?.image}`} alt="" />
+                        ? (<div className='w-full flex justify-center p-3'>
+                            <img className='rounded-lg w-[85%] h-[350px] border-[1px] border-[#202327]' src={`${URL}/${tweet?.image}`} alt="" />
                         </div>)
                         : <></>
                 }
@@ -94,19 +94,19 @@ const Tweet = ({ tweet }) => {
                 <div className='w-full p-4'>
                     <div className='flex justify-between w-full mt-4'>
                         <div className='text-2xl items-center cursor-pointer flex'>
-                            <div className='p-2 hover:bg-green-100 rounded-full'>
+                            <div className='p-2 hover:dark:text-black hover:bg-green-100 rounded-full'>
                                 <BiCommentDetail />
                             </div>
                             <p className='text-lg'>0</p>
                         </div>
                         <div className='text-2xl items-center cursor-pointer flex'>
-                            <div onClick={() => likeDislikeHandler(tweet?._id)} className='p-2 hover:bg-pink-100 rounded-full'>
+                            <div onClick={() => likeDislikeHandler(tweet?._id)} className='p-2 hover:dark:text-black hover:bg-pink-100 rounded-full'>
                                 <CiHeart />
                             </div>
                             <p className='text-lg'>{tweet?.likes?.length}</p>
                         </div>
                         <div className='text-2xl items-center cursor-pointer flex'>
-                            <div onClick={() => bookmarkHandler(tweet?._id)} className='p-2 hover:bg-yellow-100 rounded-full'>
+                            <div onClick={() => bookmarkHandler(tweet?._id)} className='p-2 hover:dark:text-black hover:bg-yellow-100 rounded-full'>
                                 {
                                     user?.bookmarks?.includes(tweet?._id)
                                         ? <IoBookmark />
@@ -119,7 +119,7 @@ const Tweet = ({ tweet }) => {
                         {
                             user?._id === tweet?.userId && (
                                 <div className='text-2xl items-center cursor-pointer flex'>
-                                    <div onClick={() => deleteTweetHandler(tweet?._id)} className='p-2 hover:bg-red-100 rounded-full'>
+                                    <div onClick={() => deleteTweetHandler(tweet?._id)} className='p-2 hover:dark:text-black hover:bg-red-100 rounded-full'>
                                         <MdDeleteOutline />
                                     </div>
                                 </div>

@@ -9,8 +9,8 @@ const Feed = () => {
   console.log(tweets)
 
   return (
-    <div className='w-[54%]'>
-      <div className='w-full border border-gray-100'>
+    <div className=''>
+      <div className='w-full border border-gray-100 dark:border-[#202327]'>
         <CreatePost />
         {
           tweets?.map((tweet) => <Tweet key={tweet?._id} tweet={tweet} />)

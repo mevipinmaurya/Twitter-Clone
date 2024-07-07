@@ -1,0 +1,11 @@
+#midSection {
+    overflow-y: scroll;
+}
+
+#midSection::-webkit-scrollbar {
+    display: none;
+}
+
+#midSection {
+    scrollbar-width: none;
+}

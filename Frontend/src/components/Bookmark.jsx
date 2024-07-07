@@ -13,10 +13,10 @@ const Bookmark = () => {
     useGetBookmarkedTweets(user?._id)
 
     return (
-        <div className='w-[54%]'>
-            <div className='w-full border-b border-gray-200 '>
-                <div className='flex items-center py-3 border-l border-r border-gray-100'>
-                    <Link to={"/"} className='p-2 rounded-full hover:bg-gray-100 cursor-pointer'>
+        <div className=''>
+            <div className='w-full border-b border-gray-200 dark:border-[#202327] '>
+                <div className='flex items-center py-3 border-l border-r border-gray-100 dark:border-[#202327]'>
+                    <Link to={"/"} className='p-2 rounded-full hover:bg-gray-100 hover:dark:bg-[#202327] cursor-pointer'>
                         <IoArrowBackOutline size="24px" />
                     </Link>
                     <div className='ml-1'>
@@ -26,7 +26,7 @@ const Bookmark = () => {
                 </div>
             </div>
 
-            <div className="w-full border border-gray-100">
+            <div className="w-full border border-gray-100 dark:border-[#202327]">
                 {
                     bookmarkTweet?.map((tweet) => <Tweet key={tweet?._id} tweet={tweet} />)
                 }

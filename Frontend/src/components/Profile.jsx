@@ -74,15 +74,15 @@ const Profile = () => {
 
 
     return (
-        <div className='w-[54%]'>
-            <div className='w-full border-b border-gray-200 '>
-                <div className='flex items-center py-3 border-l border-r border-gray-100'>
+        <div className=''>
+            <div className='w-full border-b border-gray-200 dark:border-[#202327] '>
+                <div className='flex items-center py-3 border-l border-r border-gray-100 dark:border-[#202327]'>
                     <Link to={"/"} className='p-2 rounded-full hover:bg-gray-100 cursor-pointer'>
                         <IoArrowBackOutline size="24px" />
                     </Link>
                     <div className='ml-1'>
                         <h1 className='font-bold text-lg'>{profile?.name}</h1>
-                        <p className='text-gray-500 text-sm'>{myTweets.length} Posts</p>
+                        <p className='text-gray-500 dark:text-[whitesmoke] text-sm'>{myTweets.length} Posts</p>
                     </div>
                 </div>
                 <div className='relative'>
@@ -95,7 +95,7 @@ const Profile = () => {
                     <div className='flex justify-end mt-5'>
                         {
                             profile?._id === user?._id
-                                ? (<button className='px-5 py-2 border-[1px] border-black text-md hover:bg-gray-200 rounded-full text-center' >Edit Profile</button>)
+                                ? (<button className='px-5 py-2 border-[1px] border-black text-md hover:bg-gray-200 dark:bg-transparent dark:border-white dark:text-white rounded-full text-center' >Edit Profile</button>)
                                 : (<button onClick={followAndUnfollowHandler} className='px-5 py-2 border-[1px] text-white bg-black text-md rounded-full text-center' >{user.following.includes(profile?._id) ? "Following" : "Follow"}</button>)
                         }
                     </div>
@@ -103,27 +103,27 @@ const Profile = () => {
                 <div className='m-4'>
                     <h1 className='text-xl font-bold'>{profile?.name}</h1>
                     <p>@{profile?.username}</p>
-                    <div className='text-gray-800 mt-5'>
+                    <div className='text-gray-800 dark:text-[#b1b1b1] mt-5'>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque molestias placeat aliquam error eum libero. Nesciunt officia pariatur ut! Assumenda.</p>
                     </div>
                     <div className='flex mt-5 items-center gap-3'>
                         <p className='text-xl font-bold'><SlCalender /></p>
-                        <p><span className='text-lg font-semibold'>Joined</span> {createdDate((profile?.createdAt))}</p>
+                        <p className='dark:text-[#b1b1b1]'><span className='text-lg dark:text-white font-semibold'>Joined</span> {createdDate((profile?.createdAt))}</p>
                     </div>
                     <div className='flex gap-4 mt-4'>
                         <div className='flex gap-2 items-center'>
                             <p className='text-lg font-bold'>{profile?.following.length}</p>
-                            <p className='text-lg text-gray-800'>Following</p>
+                            <p className='text-lg text-gray-800 dark:text-[#b1b1b1]'>Following</p>
                         </div>
                         <div className='flex gap-2 items-center'>
                             <p className='text-lg font-bold'>{profile?.followers.length}</p>
-                            <p className='text-lg text-gray-800'>Followers</p>
+                            <p className='text-lg text-gray-800 dark:text-[#b1b1b1]'>Followers</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="w-full border border-gray-100">
+            <div className="w-full border border-gray-100 dark:border-[#202327]">
                 {
                     myTweets?.map((tweet) => <Tweet key={tweet?._id} tweet={tweet} />)
                 }
