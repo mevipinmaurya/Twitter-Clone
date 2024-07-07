@@ -7,6 +7,7 @@ const userSlice = createSlice({
         otherUsers: null,
         profile: null,
         profileRefresh: false,
+        bookmarkTweet: null,
     },
     reducers: {
         // Multiple actions
@@ -32,10 +33,13 @@ const userSlice = createSlice({
         },
         getProfileRefresh: (state) => {
             state.profileRefresh = !state.profileRefresh
+        },
+        getBookmarkTweets: (state, action) => {
+            state.bookmarkTweet = action.payload
         }
     }
 })
 
-export const { getUser, getOtherUsers, getMyProfile, followingUpdate, getProfileRefresh } = userSlice.actions;
+export const { getUser, getOtherUsers, getMyProfile, followingUpdate, getProfileRefresh, getBookmarkTweets } = userSlice.actions;
 
 export default userSlice.reducer;

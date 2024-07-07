@@ -82,7 +82,7 @@ const Profile = () => {
                     </Link>
                     <div className='ml-1'>
                         <h1 className='font-bold text-lg'>{profile?.name}</h1>
-                        <p className='text-gray-500 text-sm'>10 Posts</p>
+                        <p className='text-gray-500 text-sm'>{myTweets.length} Posts</p>
                     </div>
                 </div>
                 <div className='relative'>

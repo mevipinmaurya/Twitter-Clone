@@ -5,9 +5,10 @@ import { BiCommentDetail } from "react-icons/bi";
 import { CiHeart } from "react-icons/ci";
 import { CiBookmark } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
+import { IoBookmark } from "react-icons/io5";
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { TWEET_API_ENDPOINT } from '../utils/Constant';
+import { TWEET_API_ENDPOINT, USER_API_ENDPOINT } from '../utils/Constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefresh } from '../redux/TweetSlice';
 import { timeSince } from '../utils/Constant';
@@ -20,9 +21,11 @@ const Tweet = ({ tweet }) => {
 
     const { user } = useSelector(store => store.user);
     const userId = user?._id
+    // console.log(user.bookmarks.includes(tweet?._id))
 
     const dispatch = useDispatch()
 
+    // Like or dislike the tweet
     const likeDislikeHandler = async (id) => {
         try {
             const res = await axios.put(`${TWEET_API_ENDPOINT}/like/${id}`, { id: userId }, { withCredentials: true })
@@ -35,9 +38,23 @@ const Tweet = ({ tweet }) => {
         }
     }
 
+    // Deleting the tweet
     const deleteTweetHandler = async (id) => {
         try {
             const res = await axios.delete(`${TWEET_API_ENDPOINT}/delete/${id}`, { withCredentials: true })
+
+            dispatch(getRefresh())
+            toast.success(res.data.message)
+        } catch (error) {
+            console.log(error);
+            toast.error("Error")
+        }
+    }
+
+    // Adding tweet to the bookmark
+    const bookmarkHandler = async (id) => {
+        try {
+            const res = await axios.put(`${USER_API_ENDPOINT}/bookmark/${id}`, { id: userId }, { withCredentials: true })
 
             dispatch(getRefresh())
             toast.success(res.data.message)
@@ -66,13 +83,13 @@ const Tweet = ({ tweet }) => {
                     </div>
 
                 </div>
-                    {
-                        tweet?.image
-                            ? (<div className='w-full p-3'>
-                                <img className='rounded-lg w-full h-[300px]' src={`${URL}/${tweet?.image}`} alt="" />
-                            </div>)
-                            : <></>
-                    }
+                {
+                    tweet?.image
+                        ? (<div className='w-full p-3'>
+                            <img className='rounded-lg w-full h-[300px]' src={`${URL}/${tweet?.image}`} alt="" />
+                        </div>)
+                        : <></>
+                }
 
                 <div className='w-full p-4'>
                     <div className='flex justify-between w-full mt-4'>
@@ -89,10 +106,14 @@ const Tweet = ({ tweet }) => {
                             <p className='text-lg'>{tweet?.likes?.length}</p>
                         </div>
                         <div className='text-2xl items-center cursor-pointer flex'>
-                            <div className='p-2 hover:bg-yellow-100 rounded-full'>
-                                <CiBookmark />
+                            <div onClick={() => bookmarkHandler(tweet?._id)} className='p-2 hover:bg-yellow-100 rounded-full'>
+                                {
+                                    user?.bookmarks?.includes(tweet?._id)
+                                        ? <IoBookmark />
+                                        : <CiBookmark />
+                                }
                             </div>
-                            <p className='text-lg'>0</p>
+                            {/* <p className='text-lg'>{user?.bookmarks?.length}</p> */}
                         </div>
 
                         {

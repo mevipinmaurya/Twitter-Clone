@@ -131,6 +131,28 @@ const tweetBookmark = async (req, res) => {
 }
 
 
+// Get all bookmarks of a user
+const allBookmarksTweet = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const loggedInUser = await User.findById(id);
+        const bookmarkTweets = await Promise.all(loggedInUser.bookmarks.map(async (tweetId) => {
+            return await Tweet.findById(tweetId)
+        }))
+        return res.status(200).json({
+            tweets: [].concat(...bookmarkTweets)
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(401).json({
+            success: false,
+            message: "Error"
+        })
+    }
+}
+
+
+
 // Getting User profile
 const getProfile = async (req, res) => {
     try {
@@ -233,4 +255,4 @@ const unfollow = async (req, res) => {
     }
 }
 
-export { register, login, logout, tweetBookmark, getProfile, getOtherUsers, follow, unfollow }
+export { register, login, logout, tweetBookmark, allBookmarksTweet, getProfile, getOtherUsers, follow, unfollow }

@@ -55,7 +55,7 @@ const LeftSidebar = () => {
                         <span className='text-xl'><IoIosNotificationsOutline /></span>
                         <p className='font-bold text-md ml-3'>Notifications</p>
                     </Link>
-                    <Link to={"/bookmark"} className='flex my-2 px-4 py-2 items-center hover:bg-gray-200 hover:cursor-pointer rounded-full'>
+                    <Link to={`/bookmarks/${user?._id}`} className='flex my-2 px-4 py-2 items-center hover:bg-gray-200 hover:cursor-pointer rounded-full'>
                         <span className='text-xl'><CiBookmark /></span>
                         <p className='font-bold text-md ml-3'>Bookmark</p>
                     </Link>
