@@ -74,13 +74,13 @@ const likeDislike = async (req, res) => {
             //dislike
             await Tweet.findByIdAndUpdate(tweetId, { $pull: { likes: loggedInUserId } })
             res.status(200).json({
-                message: "User disliked your tweet"
+                message: "You disliked a tweet"
             })
         } else {
             //like
             await Tweet.findByIdAndUpdate(tweetId, { $push: { likes: loggedInUserId } })
             res.status(200).json({
-                message: "User liked your tweet"
+                message: "You liked a tweet"
             })
         }
     } catch (error) {

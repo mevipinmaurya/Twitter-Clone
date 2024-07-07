@@ -12,6 +12,7 @@ import cover from "../assets/cover.png"
 const CreatePost = () => {
 
     const [image, setImage] = useState(false);
+    const [displayImage, setDisplayImage] = useState(false);
 
     const [description, setDescription] = useState("")
 
@@ -80,14 +81,16 @@ const CreatePost = () => {
                         <input value={description} onChange={(e) => setDescription(e.target.value)} className='outline-none border-none ml-3 text-xl w-full' type="text" placeholder='What is happening?!' />
                     </div>
                     <div className='px-10 mt-4'>
-                        <img src={cover} alt="file_post" className={`w-[80px] cursor-pointer h-[60px] ${image ? "" : "hidden"}`} />
+                        <img src={`${displayImage}`} alt="file_post" className={`w-[80px] cursor-pointer h-[60px] ${image ? "" : "hidden"}`} />
                     </div>
                     <div className='w-full flex justify-between mt-1 mb-5 px-10 items-center'>
                         <div>
                             <label htmlFor="file-input">
                                 <p className='text-xl font-bold cursor-pointer hover:scale-110 text-[#1D9BF0]'><FaImage /></p>
                             </label>
-                            <input onChange={(e) => setImage(e.target.files[0])} type="file" id='file-input' hidden />
+                            <input onChange={(e) => {
+                                setImage(e.target.files[0]);
+                                setDisplayImage(URL.createObjectURL(e.target.files[0]))}} type="file" id='file-input' hidden />
                         </div>
                         <button type='submit' className='px-3 py-2 text-center text-lg outline-none border-none rounded-full bg-[#1D9BF0] text-white w-20'>Post</button>
                     </div>
