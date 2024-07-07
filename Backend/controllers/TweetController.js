@@ -22,7 +22,7 @@ const createTweet = async (req, res) => {
             description: description,
             userId: id,
             userDetails: user,
-            image : image_filename
+            image: image_filename
         })
         await tweet.save()
 
@@ -44,6 +44,11 @@ const createTweet = async (req, res) => {
 const deleteTweet = async (req, res) => {
     try {
         const { id } = req.params;
+
+        const tweet = await Tweet.findById(id);
+        // Also delete the 'uploads' folder image file
+        fs.unlink(`uploads/${tweet.image}`, () => { })
+
         await Tweet.findByIdAndDelete(id)
         return res.status(200).json({
             success: true,
@@ -137,9 +142,9 @@ const getFollowingTweets = async (req, res) => {
 const GetMyTweets = async (req, res) => {
     try {
         const id = req.params.id;
-        const loggedInUserTweet = await Tweet.find({userId : id})
+        const loggedInUserTweet = await Tweet.find({ userId: id })
         return res.status(200).json({
-            tweets : loggedInUserTweet
+            tweets: loggedInUserTweet
         })
     } catch (error) {
         console.log(error)
