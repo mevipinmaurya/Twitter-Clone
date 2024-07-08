@@ -9,7 +9,8 @@ const userSchema = new Schema(
         password: { type: String, required: true },
         followers: { type: Array, default: [] },
         following: { type: Array, default: [] },
-        bookmarks: { type: Array, default: [] }
+        bookmarks: { type: Array, default: [] },
+        bio : {type : String, default: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque molestias placeat aliquam error eum libero. Nesciunt officia pariatur ut! Assumenda."}
     },
     {
         timestamps: true

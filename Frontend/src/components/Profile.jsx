@@ -14,6 +14,7 @@ import { followingUpdate, getProfileRefresh } from '../redux/UserSlice';
 import { getRefresh } from '../redux/TweetSlice';
 import Tweet from './Tweet';
 import useGetLoggedinUserTweets from '../hooks/useGetLoggedinUserTweets';
+import Modal from './Modal';
 
 const Profile = () => {
 
@@ -95,7 +96,7 @@ const Profile = () => {
                     <div className='flex justify-end mt-5'>
                         {
                             profile?._id === user?._id
-                                ? (<button className='px-5 py-2 border-[1px] border-black text-md hover:bg-gray-200 dark:bg-transparent dark:border-white dark:text-white rounded-full text-center' >Edit Profile</button>)
+                                ? (<Modal />)
                                 : (<button onClick={followAndUnfollowHandler} className='px-5 py-2 border-[1px] text-white bg-black text-md rounded-full text-center' >{user.following.includes(profile?._id) ? "Following" : "Follow"}</button>)
                         }
                     </div>
