@@ -255,4 +255,33 @@ const unfollow = async (req, res) => {
     }
 }
 
-export { register, login, logout, tweetBookmark, allBookmarksTweet, getProfile, getOtherUsers, follow, unfollow }
+
+
+// Updating user profile
+const updateUserProfile = async (req, res) => {
+    let image_filename = `${req.file.filename}`
+    try {
+        const id = req.params.id;
+        const { username, bio } = req.body;
+        const loggedInUser = await User.findByIdAndUpdate(id, { username: username, bio: bio, profileImage : image_filename });
+        if(!loggedInUser){
+            return res.status(400).json({
+                success : false,
+                message : "Failed to update"
+            })
+        }
+        return res.status(200).json({
+            success : true,
+            message : "Updated successfully"
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(401).json({
+            success: false,
+            message: "Error"
+        })
+    }
+}
+
+export { register, login, logout, tweetBookmark, allBookmarksTweet, getProfile, getOtherUsers, follow, unfollow, updateUserProfile }

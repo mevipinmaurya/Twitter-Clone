@@ -3,6 +3,7 @@ import { USER_API_ENDPOINT } from "../utils/Constant";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBookmarkTweets } from "../redux/UserSlice";
+import toast from "react-hot-toast";
 
 const useGetBookmarkedTweets = (id) => {
     const dispatch = useDispatch();

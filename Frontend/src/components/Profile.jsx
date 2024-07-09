@@ -4,7 +4,7 @@ import { SlCalender } from "react-icons/sl";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useParams } from 'react-router-dom';
 import Avatar from 'react-avatar'
-import vipin from "../assets/vipin.png"
+import userImage from "../assets/user.png"
 import useGetProfile from "../hooks/useGetProfile"
 import { useDispatch, useSelector } from "react-redux"
 import toast from 'react-hot-toast';
@@ -18,6 +18,8 @@ import Modal from './Modal';
 
 const Profile = () => {
 
+    const URL = "http://localhost:3000/images";
+
     const { user, profile } = useSelector(store => store.user)
 
     const { myTweets } = useSelector(store => store.tweet)
@@ -25,7 +27,7 @@ const Profile = () => {
     // console.log(profile)
     // console.log(user)
 
-    console.log(myTweets)
+    // console.log(myTweets)
 
     const dispatch = useDispatch();
 
@@ -90,7 +92,11 @@ const Profile = () => {
                     <img className='h-[200px] w-full' src={cover} alt="" />
 
                     <div className='absolute top-[134px] left-3 border-4 border-white rounded-full'>
-                        <Avatar src={vipin} size="120" round={true} />
+                        {
+                            profile?.profileImage
+                            ?<Avatar src={`${URL}/${profile?.profileImage}`} size="120" round={true} />
+                            :<Avatar src={userImage} className='bg-white' size="120" round={true} />
+                        }
                     </div>
 
                     <div className='flex justify-end mt-5'>
@@ -105,7 +111,7 @@ const Profile = () => {
                     <h1 className='text-xl font-bold'>{profile?.name}</h1>
                     <p>@{profile?.username}</p>
                     <div className='text-gray-800 dark:text-[#b1b1b1] mt-5'>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque molestias placeat aliquam error eum libero. Nesciunt officia pariatur ut! Assumenda.</p>
+                        <p>{profile?.bio}</p>
                     </div>
                     <div className='flex mt-5 items-center gap-3'>
                         <p className='text-xl font-bold'><SlCalender /></p>

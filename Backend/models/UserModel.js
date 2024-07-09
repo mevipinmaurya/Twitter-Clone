@@ -10,7 +10,9 @@ const userSchema = new Schema(
         followers: { type: Array, default: [] },
         following: { type: Array, default: [] },
         bookmarks: { type: Array, default: [] },
-        bio : {type : String, default: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque molestias placeat aliquam error eum libero. Nesciunt officia pariatur ut! Assumenda."}
+        bio : {type : String, default: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque molestias placeat aliquam error eum libero. Nesciunt officia pariatur ut! Assumenda."},
+        profileImage : {type : String},
+        coverImage : {type : String}
     },
     {
         timestamps: true
