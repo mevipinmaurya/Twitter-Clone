@@ -3,9 +3,15 @@ import { CiSearch } from "react-icons/ci";
 import Avatar from 'react-avatar'
 import vipin from "../assets/vipin.png"
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const RightSidebar = ({ otherUsers }) => {
+
+  const URL = "http://localhost:3000/images";
+
+  // const { profile } = useSelector(store => store.user)
+
   return (
     <div className='w-[26%] ml-2'>
       <div className="w-full">
@@ -23,7 +29,7 @@ const RightSidebar = ({ otherUsers }) => {
                 return (
                   <div key={user._id} className='flex items-center'>
                     <div className='flex items-center gap-2'>
-                      <Avatar src={vipin} size="35" round={true} />
+                      <Avatar src={`${URL}/${user?.profileImage}`} size="35" round={true} />
                       <div className='flex flex-col'>
                         <h1 className='font-semibold text-[15px]'>{user.name}</h1>
                         <p className='text-[13px] text-gray-500 '>@{user.username}</p>

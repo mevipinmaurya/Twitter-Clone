@@ -89,13 +89,19 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className='relative'>
-                    <img className='h-[200px] w-full' src={cover} alt="" />
+                    {/* <img className='h-[200px] w-full' src={cover} alt="" /> */}
+                    
+                    {
+                        profile?.coverImage
+                            ? <img className='h-[200px] w-full' src={`${URL}/${profile?.coverImage}`} alt="" />
+                            : <img className='h-[200px] w-full' src={cover} alt="" />
+                    }
 
                     <div className='absolute top-[134px] left-3 border-4 border-white rounded-full'>
                         {
                             profile?.profileImage
-                            ?<Avatar src={`${URL}/${profile?.profileImage}`} size="120" round={true} />
-                            :<Avatar src={userImage} className='bg-white' size="120" round={true} />
+                                ? <Avatar src={`${URL}/${profile?.profileImage}`} size="120" round={true} />
+                                : <Avatar src={userImage} className='bg-white' size="120" round={true} />
                         }
                     </div>
 

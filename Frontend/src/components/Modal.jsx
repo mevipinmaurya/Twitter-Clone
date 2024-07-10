@@ -11,6 +11,7 @@ const Modal = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [profileImage, setProfileImage] = useState(false);
+  const [coverImage, setCoverImage] = useState(false);
   const { user } = useSelector(store => store.user)
   const [bio, setBio] = useState("");
   const [username, setUsername] = useState("")
@@ -25,6 +26,7 @@ const Modal = () => {
     formData.append("username", username)
     formData.append("bio", bio)
     formData.append("profileImage", profileImage)
+    formData.append("coverImage", coverImage)
 
     // console.log(formData)
     try {
@@ -75,26 +77,35 @@ const Modal = () => {
                     <label className="block text-black dark:text-white text-sm font-medium mb-1">
                       Username
                     </label>
-                    <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border border-[#45494f] rounded-md w-full py-2 px-3 text-black dark:text-white bg-transparent mb-3" />
+                    <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border border-[#45494f] rounded-md w-full py-2 px-3 text-black dark:text-white bg-transparent mb-3" required/>
                     <label className="block text-black dark:text-white text-sm font-medium mb-1">
                       Bio
                     </label>
-                    <textarea value={bio} onChange={(e) => setBio(e.target.value)} className="shadow appearance-none border border-[#45494f] h-20 rounded-md w-full resize-none py-2 px-3 text-black dark:text-white bg-transparent mb-3"></textarea>
+                    <textarea value={bio} onChange={(e) => setBio(e.target.value)} className="shadow appearance-none border border-[#45494f] h-20 rounded-md w-full resize-none py-2 px-3 text-black dark:text-white bg-transparent mb-3" required></textarea>
 
                     <div className='flex gap-2 flex-col'>
                       <p className="text-lg">Upload Profile Image</p>
                       <label htmlFor="file-input">
-                        <img src={profileImage ? URL.createObjectURL(profileImage) : upload_area} alt="file_input" className='w-[160px] cursor-pointer h-[120px]' />
+                        <img src={profileImage ? URL.createObjectURL(profileImage) : upload_area} alt="file_input" className='w-[100px] cursor-pointer h-[60px]' />
                         {/* <img src={upload_area} alt="Upload_area" /> */}
                       </label>
-                      <input onChange={(e) => setProfileImage(e.target.files[0])} type="file" id='file-input' hidden />
+                      <input onChange={(e) => setProfileImage(e.target.files[0])} type="file" id='file-input' hidden required/>
+                    </div>
+
+                    <div className='flex gap-2 flex-col mt-3'>
+                      <p className="text-lg">Upload Cover Image</p>
+                      <label htmlFor="file-input2">
+                        <img src={coverImage ? URL.createObjectURL(coverImage) : upload_area} alt="file_input" className='w-[100px] cursor-pointer h-[60px]' />
+                        {/* <img src={upload_area} alt="Upload_area" /> */}
+                      </label>
+                      <input onChange={(e) => setCoverImage(e.target.files[0])} type="file" id='file-input2' hidden required/>
                     </div>
 
                     <div className="flex items-center justify-end p-6 rounded-b">
                       <button
                         className="text-red-500 border-[1px] border-red-500 background-transparent font-bold uppercase px-6 py-3 rounded-md text-sm outline-none focus:outline-none mr-1 mb-1"
                         type="button"
-                      // onClick={() => setShowModal(false)}
+                      onClick={() => setShowModal(false)}
                       >
                         Back
                       </button>

@@ -11,8 +11,8 @@ const userSchema = new Schema(
         following: { type: Array, default: [] },
         bookmarks: { type: Array, default: [] },
         bio : {type : String, default: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque molestias placeat aliquam error eum libero. Nesciunt officia pariatur ut! Assumenda."},
-        profileImage : {type : String},
-        coverImage : {type : String}
+        profileImage : {type : String, default: "defaultUser.jpg"},
+        coverImage : {type : String, default: "defaultCover.png"}
     },
     {
         timestamps: true

@@ -259,20 +259,22 @@ const unfollow = async (req, res) => {
 
 // Updating user profile
 const updateUserProfile = async (req, res) => {
-    let image_filename = `${req.file.filename}`
+    let profile_image = req.files.profileImage[0].filename
+    let cover_image = req.files.coverImage[0].filename
+
     try {
         const id = req.params.id;
         const { username, bio } = req.body;
-        const loggedInUser = await User.findByIdAndUpdate(id, { username: username, bio: bio, profileImage : image_filename });
-        if(!loggedInUser){
+        const loggedInUser = await User.findByIdAndUpdate(id, { username: username, bio: bio, profileImage: profile_image, coverImage: cover_image });
+        if (!loggedInUser) {
             return res.status(400).json({
-                success : false,
-                message : "Failed to update"
+                success: false,
+                message: "Failed to update"
             })
         }
         return res.status(200).json({
-            success : true,
-            message : "Updated successfully"
+            success: true,
+            message: "Updated successfully"
         })
 
     } catch (error) {

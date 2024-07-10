@@ -86,8 +86,8 @@ const Login = () => {
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
       <div className='flex items-center justify-evenly w-[80%]'>
-        <div>
-          <img className='ml-5 dark:invert-100' width={"300px"} src={twitter} alt="twitter-logo" />
+        <div className='dark:bg-white p-5 rounded-md'>
+          <img className='ml-5' width={"300px"} src={twitter} alt="twitter-logo" />
         </div>
         <div>
           <div className='my-5'>
@@ -102,7 +102,7 @@ const Login = () => {
               </>)
             }
 
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' className="outline-blue-500 border border-gray-800 px-3 py-2 rounded-full my-1 font-semibold" />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' className="outline-blue-500 border border-gray-800 px-3 py-2 rounded-full my-1 font-semibold dark:text-white dark:bg-transparent" />
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' className="outline-blue-500 border border-gray-800 px-3 py-2 rounded-full my-1 font-semibold dark:text-white dark:bg-transparent" />
 
 

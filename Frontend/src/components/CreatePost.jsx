@@ -10,6 +10,8 @@ import { getAllTweets, getIsActive, getRefresh } from '../redux/TweetSlice'
 import cover from "../assets/cover.png"
 
 const CreatePost = () => {
+    const URL = "http://localhost:3000/images";
+    const { profile } = useSelector(store => store.user)
 
     const [image, setImage] = useState(false);
     const [displayImage, setDisplayImage] = useState(false);
@@ -76,12 +78,12 @@ const CreatePost = () => {
                 <form onSubmit={submitHandler} className='border border-b-gray-200 dark:border-[#202327] border-l-0 border-r-0 border-t-0'>
                     <div className='flex items-center px-10'>
                         <div>
-                            <Avatar src={vipin} size="45" round={true} />
+                            <Avatar src={`${URL}/${profile?.profileImage}`} size="45" round={true} />
                         </div>
                         <input value={description} onChange={(e) => setDescription(e.target.value)} className='outline-none border-none ml-3 text-xl w-full dark:bg-transparent' type="text" placeholder='What is happening?!' />
                     </div>
                     <div className='px-10 mt-4'>
-                        <img src={`${displayImage}`} alt="file_post" className={`w-[80px] cursor-pointer h-[60px] ${image ? "" : "hidden"}`} />
+                        {/* <img src={`${displayImage}`} alt="file_post" className={`w-[80px] cursor-pointer h-[60px] ${image ? "" : "hidden"}`} /> */}
                     </div>
                     <div className='w-full flex justify-between mt-1 mb-5 px-10 items-center'>
                         <div>
@@ -90,7 +92,7 @@ const CreatePost = () => {
                             </label>
                             <input onChange={(e) => {
                                 setImage(e.target.files[0]);
-                                setDisplayImage(URL.createObjectURL(e.target.files[0]))}} type="file" id='file-input' hidden />
+                                }} type="file" id='file-input' hidden />
                         </div>
                         <button type='submit' className='px-3 py-2 text-center text-lg outline-none border-none rounded-full bg-[#1D9BF0] text-white w-20'>Post</button>
                     </div>

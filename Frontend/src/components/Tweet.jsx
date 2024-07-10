@@ -18,6 +18,7 @@ const Tweet = ({ tweet }) => {
     // console.log(tweet)
 
     const URL = "http://localhost:3000/images"
+    const { profile } = useSelector(store => store.user)
 
     const { user } = useSelector(store => store.user);
     const userId = user?._id
@@ -69,7 +70,7 @@ const Tweet = ({ tweet }) => {
         <div>
             <div className='border-b border-gray-200 dark:border-[#202327]'>
                 <div className='flex items-center w-full gap-4 p-4'>
-                    <Avatar src={vipin} size="40" round={true} />
+                    <Avatar src={`${URL}/${profile?.profileImage}`} size="40" round={true} />
                     <div className='w-full'>
 
                         <div className='flex gap-3 items-center'>

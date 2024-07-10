@@ -5,16 +5,29 @@ import multer from "multer"
 
 const userRouter = express.Router();
 
-// Image storage engine
-const storage = multer.diskStorage({
-    destination: "uploads",
-    filename: (req, file, cb) => {
-        return cb(null, `${Date.now()}${file.originalname}`)
+// // Image storage engine
+// const storage = multer.diskStorage({
+//     destination: "uploads",
+//     filename: (req, file, cb) => {
+//         return cb(null, `${Date.now()}${file.originalname}`)
+//     }
+//     // cb => Callback
+// })
+
+// const upload = multer({ storage: storage })
+
+
+var storage = multer.diskStorage({
+    destination : "uploads",
+    filename : function (req, file, cb){
+        cb(null, `${Date.now()}${file.originalname}`)
     }
-    // cb => Callback
 })
 
-const upload = multer({ storage: storage })
+var upload = multer({storage : storage})
+
+var multipleUploads = upload.fields([{name : 'profileImage'}, {name : 'coverImage'}])
+
 
 userRouter.post("/register", register)
 userRouter.post("/login", login)
@@ -25,6 +38,6 @@ userRouter.get("/profile/:id", isAuthenticated, getProfile)
 userRouter.get("/otheruser/:id", isAuthenticated, getOtherUsers)
 userRouter.post("/follow/:id", isAuthenticated, follow)
 userRouter.post("/unfollow/:id", isAuthenticated, unfollow)
-userRouter.post("/updateprofile/:id", isAuthenticated, upload.single('profileImage'), updateUserProfile)
+userRouter.post("/updateprofile/:id", isAuthenticated, multipleUploads, updateUserProfile)
 
 export default userRouter;
